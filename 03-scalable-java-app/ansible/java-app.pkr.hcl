@@ -1,15 +1,15 @@
 variable "ami_id" {
   type    = string
-  default = "ami-0735c191cf914754d"
+  default = "ami-03f65b8614a860c29"
 }
 
 locals {
-    app_name = "pet-clinic"
+    app_name = "java-app-1.0.1"
 }
 
-source "amazon-ebs" "nginx" {
+source "amazon-ebs" "java-app" {
   ami_name      = "PACKER-${local.app_name}"
-  instance_type = "t2.micro"
+  instance_type = "t2.medium"
   region        = "us-west-2"
   source_ami    = "${var.ami_id}"
   ssh_username  = "ubuntu"
@@ -20,13 +20,10 @@ source "amazon-ebs" "nginx" {
 }
 
 build {
-  sources = ["source.amazon-ebs.nginx"]
+  sources = ["source.amazon-ebs.java-app"]
 
   provisioner "ansible" {
-    playbook_file = "ami.yml"
-    extra_vars = {
-      consul_server_address = var.consul.server.ip
-    }
+    playbook_file = "java-app.yml"
   }
 
 }

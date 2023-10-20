@@ -8,9 +8,9 @@
     source_dir: files
     dest_dir: /home/ubuntu/
     files:
-      - config.yml
       - properties.py
-      - script.sh
+      - start.sh
+      - pet-clinic-1.0.1.jar
 
   roles:
     - java
